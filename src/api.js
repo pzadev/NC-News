@@ -6,7 +6,8 @@ const api = axios.create({
 
 const getArticles = () => {
   return api.get("/articles").then(({ data }) => {
-    return data.articles;
+    const {articles} = data
+    return articles
   });
 };
 
