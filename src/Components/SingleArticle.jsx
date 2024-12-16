@@ -38,6 +38,7 @@ const SingleArticle = () => {
         src={article.article_img_url}
         alt={article.title}
       />
+      <p className="article-body">{article.body}</p>
         <p className="article-votes">Vote Count: {article.votes}</p>
         <p className="article-date">Created At: {article.created_at}</p>
         <p className="article-comment-count">
