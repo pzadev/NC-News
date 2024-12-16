@@ -1,10 +1,12 @@
-import { getSingleArticle } from "../api";
+import { getSingleArticle, commentsFromArticle } from "../api";
 import { useParams } from "react-router";
 import { useState, useEffect } from "react";
+import CommentCard from "./CommentCard";
 
 const SingleArticle = () => {
   const { article_id } = useParams();
   const [article, setArticle] = useState({});
+  const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -19,6 +21,18 @@ const SingleArticle = () => {
       .finally(() => {
         setLoading(false);
       });
+  }, [article_id]);
+
+
+  useEffect(() => {
+    commentsFromArticle(article_id)
+      .then((comments) => {
+        console.log(comments, "SA30")
+        setComments(comments);
+      })
+      .catch((err) => {
+        console.error(err);
+      })
   }, [article_id]);
 
   if (loading) {
@@ -45,6 +59,13 @@ const SingleArticle = () => {
           {" "}
           Comment Count: {article.comment_count}
         </p>
+        <div className="comment-grid">
+        {comments.map((comment) => (
+          <div key={comment.comment_id}>
+              <CommentCard key={comment.comment_id} comments={comment} />
+          </div>
+        ))}
+      </div>
       </div>
     </>
   );
