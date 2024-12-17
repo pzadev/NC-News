@@ -9,9 +9,9 @@ const ArticleCard = ({ article }) => {
   const voteUpdater = (change) => {
     if (!hasVoted) {
       setVoteChange((prev) => prev + change);
+      setHasVoted(true);
       updateArticleVotes(article.article_id, change)
         .then(() => {
-          setHasVoted(true);
         })
         .catch((err) => {
           setVoteChange((prev) => prev - change);
