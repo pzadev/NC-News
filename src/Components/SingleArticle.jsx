@@ -1,13 +1,32 @@
-import { getSingleArticle, updateArticleVotes } from "../api";
+import {
+  getSingleArticle,
+  updateArticleVotes,
+  commentsFromArticle,
+} from "../api";
 import { useParams } from "react-router";
 import { useState, useEffect } from "react";
+import CommentPost from "./CommentPost";
+import CommentCard from "./CommentCard";
 
 const SingleArticle = () => {
   const { article_id } = useParams();
   const [article, setArticle] = useState({});
+  const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(false);
   const [voteChange, setVoteChange] = useState(0);
-  const [hasVoted, setHasVoted] = useState(false)
+  const [hasVoted, setHasVoted] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    commentsFromArticle(article_id)
+      .then((comments) => {
+        setComments(comments);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, [article_id]);
 
   useEffect(() => {
     setLoading(true);
@@ -26,19 +45,18 @@ const SingleArticle = () => {
   const voteUpdater = (change) => {
     if (!hasVoted) {
       setVoteChange((prev) => prev + change);
+      setHasVoted(true);
       updateArticleVotes(article.article_id, change)
-        .then(() => {
-          setHasVoted(true);
-        })
+        .then(() => {})
         .catch((err) => {
           setVoteChange((prev) => prev - change);
-          alert("Vote failed, please try again later.")
+          alert("Vote failed, please try again later.");
         });
     }
   };
 
-  if (loading){
-    return <p>Loading ...</p>
+  if (loading) {
+    return <p>Loading ...</p>;
   }
 
   return (
@@ -62,12 +80,28 @@ const SingleArticle = () => {
         <p className="article-votes">
           Vote Count: {article.votes + voteChange}
         </p>
-        <button onClick={() => voteUpdater(1)} disabled={hasVoted}>⬆️ Upvote</button>
-        <button onClick={() => voteUpdater(-1)}disabled={hasVoted}>⬇️ Downvote</button>
+        <button onClick={() => voteUpdater(1)} disabled={hasVoted}>
+          ⬆️ Upvote
+        </button>
+        <button onClick={() => voteUpdater(-1)} disabled={hasVoted}>
+          ⬇️ Downvote
+        </button>
         <p className="article-comment-count">
           {" "}
           Comment Count: {article.comment_count}
         </p>
+        <div className="comment-grid">
+          {comments.length > 0 ? (
+            comments.map((comment) => (
+              <div key={comment.comment_id}>
+                <CommentCard comments={comment} />
+              </div>
+            ))
+          ) : (
+            <p>No comments yet. Be the first to add one!</p>
+          )}
+        </div>
+        <CommentPost />
       </div>
     </>
   );
