@@ -23,7 +23,25 @@ const commentsFromArticle = (article_id) => {
         const {comments} = data
         return comments
       });
-
 }
 
-export { getArticles, getSingleArticle, commentsFromArticle };
+const updateArticleVotes = (article_id, voteChange) => {
+    return api.patch(`/articles/${article_id}`, { inc_votes: voteChange })
+      .then(({ data }) => {
+        console.log(data)
+        const {article} = data
+        return article;
+      });
+  };
+
+// Error testing for updateVotes API 
+
+// const updateArticleVotes = (article_id, change) => {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       reject(new Error("Failed to update vote"));
+//     }, 1000);
+//   });
+// };
+
+export { getArticles, getSingleArticle, commentsFromArticle, updateArticleVotes };
