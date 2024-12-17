@@ -11,6 +11,12 @@ const getArticles = () => {
   });
 };
 
+const getUsers = () => {
+  return api.get("/users").then(({ data }) => {
+    const { users } = data;
+    return users;
+  });
+};
 const getSingleArticle = (article_id) => {
   return api.get(`/articles/${article_id}`).then(({ data }) => {
     const { article } = data;
@@ -42,15 +48,19 @@ const postComment = (article_id, username, commentBody) => {
       body: commentBody,
     })
     .then(({ data }) => {
-      return data;
+      const {comment} = data
+      return comment
     })
     .catch((err) => {
-      console.log(err);
       throw new Error(
         "There was an issue posting the comment. Please try again."
       );
     });
 };
+
+const deleteComment = (comment_id) => {
+  return api.delete(`/comments/${comment_id}`)
+}
 
 export {
   getArticles,
@@ -58,4 +68,6 @@ export {
   commentsFromArticle,
   updateArticleVotes,
   postComment,
+  getUsers,
+  deleteComment
 };

@@ -94,14 +94,14 @@ const SingleArticle = () => {
           {comments.length > 0 ? (
             comments.map((comment) => (
               <div key={comment.comment_id}>
-                <CommentCard comments={comment} />
+                <CommentCard comments={comment} setComments={setComments} />
               </div>
             ))
           ) : (
             <p>No comments yet. Be the first to add one!</p>
           )}
         </div>
-        <CommentPost />
+        <CommentPost setComments={setComments} />
       </div>
     </>
   );
