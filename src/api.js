@@ -4,11 +4,19 @@ const api = axios.create({
   baseURL: "https://news-api-5gcc.onrender.com/api",
 });
 
-const getArticles = () => {
+const getArticles = (query) => {
+  if (query){
+  return api.get(`/articles?topic=${query}`).then(({ data }) => {
+    const { articles } = data;
+    return articles;
+  });
+} else {
   return api.get("/articles").then(({ data }) => {
     const { articles } = data;
     return articles;
   });
+
+}
 };
 
 const getUsers = () => {
@@ -17,6 +25,13 @@ const getUsers = () => {
     return users;
   });
 };
+
+const getTopics = () => {
+  return api.get("/topics").then(({ data }) => {
+    return data;
+  });
+};
+
 const getSingleArticle = (article_id) => {
   return api.get(`/articles/${article_id}`).then(({ data }) => {
     const { article } = data;
@@ -64,6 +79,7 @@ const deleteComment = (comment_id) => {
 
 export {
   getArticles,
+  getTopics,
   getSingleArticle,
   commentsFromArticle,
   updateArticleVotes,

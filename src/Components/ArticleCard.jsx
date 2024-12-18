@@ -2,9 +2,11 @@ import { Link } from "react-router";
 import { useState } from "react";
 import { updateArticleVotes } from "../api";
 
+
 const ArticleCard = ({ article }) => {
   const [voteChange, setVoteChange] = useState(0);
   const [hasVoted, setHasVoted] = useState(false);
+ 
 
   const voteUpdater = (change) => {
     if (!hasVoted) {
@@ -19,6 +21,7 @@ const ArticleCard = ({ article }) => {
         });
     }
   };
+
 
   return (
     <section className="article-card">
