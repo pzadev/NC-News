@@ -2,6 +2,7 @@ import './App.css'
 import { Route } from 'react-router'
 import { Routes } from 'react-router'
 import Header from './Components/Header'
+import Topics from './Topics'
 import Nav from './Components/Nav'
 import Articles from './Components/Articles'
 import SingleArticle from './Components/SingleArticle'
@@ -21,6 +22,7 @@ function App() {
     <Route path="/articles" element={<Articles />} />
     <Route path="/user" element={<User />} />
     <Route path="/articles/:article_id" element={<SingleArticle />} />
+    <Route path="/topics" element={<Topics />} />
     </Routes>
     </UserProvider>
     </>
