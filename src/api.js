@@ -5,19 +5,19 @@ const api = axios.create({
 });
 
 const getArticles = (query, sorting, order) => {
-    const params = [];
-  
-    if (query) params.push(`topic=${query}`);
-    if (sorting) params.push(`sort_by=${sorting}`);
-    if (order) params.push(`order=${order}`);
-  
-    const url = `/articles${params.length ? `?${params.join('&')}` : ''}`;
-  
-    return api.get(url).then(({ data }) => {
-      const { articles } = data;
-      return articles;
-    });
-  };
+  const params = [];
+
+  if (query) params.push(`topic=${query}`);
+  if (sorting) params.push(`sort_by=${sorting}`);
+  if (order) params.push(`order=${order}`);
+
+  const url = `/articles${params.length ? `?${params.join("&")}` : ""}`;
+
+  return api.get(url).then(({ data }) => {
+    const { articles } = data;
+    return articles;
+  });
+};
 
 const getUsers = () => {
   return api.get("/users").then(({ data }) => {

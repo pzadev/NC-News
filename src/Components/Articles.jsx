@@ -10,7 +10,7 @@ const Articles = () => {
   const topic = queryParams.get("topic");
   const validSorting = ["created_at", "author", "comment_count", "votes"];
   const [sorting, setSorting] = useState("created_at");
-  const [order, setOrder] = useState('desc');
+  const [order, setOrder] = useState("desc");
 
   useEffect(() => {
     getArticles(topic, sorting, order).then((articles) => {
@@ -44,18 +44,14 @@ const Articles = () => {
         </select>
       </div>
       <div className="order-select">
-      <label>Order by</label>
+        <label>Order by</label>
         <select
           id="sort-select"
           value={order}
           onChange={(e) => setOrder(e.target.value)}
         >
-            <option value={'DESC'}>
-              descending
-            </option>
-            <option value={'ASC'}>
-              ascending
-            </option>
+          <option value={"DESC"}>descending</option>
+          <option value={"ASC"}>ascending</option>
         </select>
       </div>
       <div className="article-grid">

@@ -15,6 +15,7 @@ const SingleArticle = () => {
   const [loading, setLoading] = useState(false);
   const [voteChange, setVoteChange] = useState(0);
   const [hasVoted, setHasVoted] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     setLoading(true);
@@ -24,7 +25,8 @@ const SingleArticle = () => {
         setLoading(false);
       })
       .catch((err) => {
-        console.error(err);
+        console.log(err);
+        setError(err);
       });
   }, [article_id]);
 
@@ -59,6 +61,18 @@ const SingleArticle = () => {
     return <p>Loading ...</p>;
   }
 
+  if (error) {
+    console.log(error);
+    return (
+      <>
+        {error.code} {error.message}
+        <p>
+          An article with this id doesn't exist... yet! Why don't you write one?
+        </p>
+      </>
+    );
+  }
+
   return (
     <>
       <div className="article-single">
@@ -90,6 +104,7 @@ const SingleArticle = () => {
           {" "}
           Comment Count: {article.comment_count}
         </p>
+        <CommentPost setComments={setComments} />
         <div className="comment-grid">
           {comments.length > 0 ? (
             comments.map((comment) => (
@@ -101,7 +116,6 @@ const SingleArticle = () => {
             <p>No comments yet. Be the first to add one!</p>
           )}
         </div>
-        <CommentPost setComments={setComments} />
       </div>
     </>
   );

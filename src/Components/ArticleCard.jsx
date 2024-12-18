@@ -2,26 +2,22 @@ import { Link } from "react-router";
 import { useState } from "react";
 import { updateArticleVotes } from "../api";
 
-
 const ArticleCard = ({ article }) => {
   const [voteChange, setVoteChange] = useState(0);
   const [hasVoted, setHasVoted] = useState(false);
- 
 
   const voteUpdater = (change) => {
     if (!hasVoted) {
       setVoteChange((prev) => prev + change);
       setHasVoted(true);
       updateArticleVotes(article.article_id, change)
-        .then(() => {
-        })
+        .then(() => {})
         .catch((err) => {
           setVoteChange((prev) => prev - change);
-          alert("Vote failed, please try again later.")
+          alert("Vote failed, please try again later.");
         });
     }
   };
-
 
   return (
     <section className="article-card">

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { getTopics } from "./api";
-import TopicCard from "./TopicCard";
+import { getTopics } from "../api";
+import TopicCard from "./TopicCard"
 
 const Topics = () => {
   const [loading, setLoading] = useState(false);

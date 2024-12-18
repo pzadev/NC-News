@@ -5,35 +5,37 @@ import { useState } from "react";
 const CommentCard = ({ comments, setComments }) => {
   const { loggedInUser } = useUser();
   const [feedback, setFeedback] = useState("");
-  const [loading, setIsLoading] = useState(false)
+  const [loading, setIsLoading] = useState(false);
 
   const handleDelete = () => {
-    setIsLoading(true)
-    const isConfirmed = window.confirm("Are you sure you want to delete this comment?");
-    if (isConfirmed){
-    deleteComment(comments.comment_id)
-      .then(() => {
-        setComments((prevComments) =>
-          prevComments.filter(
-            (comment) => comment.comment_id !== comments.comment_id
-          )
-        );
-        setIsLoading(false)
-        setFeedback("Comment successfully deleted!");
-        setTimeout(() => {
-          setFeedback(""); 
-        }, 3000);
-      })
-      .catch((err) => {
-        setIsLoading(false)
-        setFeedback("Failed to delete the comment. Please try again.");
-      });
+    setIsLoading(true);
+    const isConfirmed = window.confirm(
+      "Are you sure you want to delete this comment?"
+    );
+    if (isConfirmed) {
+      deleteComment(comments.comment_id)
+        .then(() => {
+          setComments((prevComments) =>
+            prevComments.filter(
+              (comment) => comment.comment_id !== comments.comment_id
+            )
+          );
+          setIsLoading(false);
+          setFeedback("Comment successfully deleted!");
+          setTimeout(() => {
+            setFeedback("");
+          }, 3000);
+        })
+        .catch((err) => {
+          setIsLoading(false);
+          setFeedback("Failed to delete the comment. Please try again.");
+        });
+    }
   };
-}
 
-if (loading){
-  return <p>Processing request...</p>
-}
+  if (loading) {
+    return <p>Processing request...</p>;
+  }
 
   return (
     <div className="comment-card">
@@ -51,7 +53,7 @@ if (loading){
       {loggedInUser === comments.author && (
         <button onClick={handleDelete}>Delete Comment</button>
       )}
-       {feedback && <p>{feedback}</p>}
+      {feedback && <p>{feedback}</p>}
     </div>
   );
 };

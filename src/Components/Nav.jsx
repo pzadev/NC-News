@@ -13,13 +13,12 @@ const Nav = () => {
         <p>Topics</p>
       </Link>
       <Link to="/user">
-      <p>{loggedInUser ? loggedInUser : "User"}</p>
+        <p>{loggedInUser ? <p>Currently logged in as <strong>{loggedInUser}</strong></p> : "Users"}</p>
       </Link>
       {loggedInUser ? (
-        <strong><p>You are logged in as: {loggedInUser}</p>
-        </strong>
+        ''
       ) : (
-        <p>Not logged in</p>
+        <p>Not currently logged in</p>
       )}
     </nav>
   );
