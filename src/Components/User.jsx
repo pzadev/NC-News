@@ -38,7 +38,7 @@ const User = () => {
     <div className="user-page-container">
       <div className="user-login-box">
         <h2>User Log In</h2>
-        <label>Select a user:</label>
+        <label>Once logged in, you are then able to comment on articles and delete your own comments!</label>
         <select
           id="user-select"
           value={user}

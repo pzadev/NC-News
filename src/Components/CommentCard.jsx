@@ -38,24 +38,29 @@ const CommentCard = ({ comments, setComments }) => {
   }
 
   return (
-    <div className="comment-card">
-      <p>
-        <strong>Author:</strong> {comments.author}
-      </p>
-      <p>{comments.body}</p>
-      <p>
-        <strong>Votes:</strong> {comments.votes}
-      </p>
-      <p>
-        <strong>Written at:</strong>{" "}
-        {new Date(comments.created_at).toLocaleString()}
-      </p>
+    <article className="comment-card">
+      <header>
+        <p>
+          <strong>Author:</strong> {comments.author}
+        </p>
+        <p>
+          <strong>Votes:</strong> {comments.votes}
+        </p>
+      </header>
+      <section>
+        <p>{comments.body}</p>
+        <p>
+          <strong>Written at:</strong>{" "}
+          {new Date(comments.created_at).toLocaleString()}
+        </p>
+      </section>
       {loggedInUser === comments.author && (
-        <button onClick={handleDelete}>Delete Comment</button>
+        <footer>
+          <button onClick={handleDelete}>Delete Comment</button>
+        </footer>
       )}
       {feedback && <p>{feedback}</p>}
-    </div>
+    </article>
   );
 };
-
 export default CommentCard;

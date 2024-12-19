@@ -7,6 +7,9 @@ import { useParams } from "react-router";
 import { useState, useEffect } from "react";
 import CommentPost from "./CommentPost";
 import CommentCard from "./CommentCard";
+import Lottie from "lottie-react";
+import loadingAnimation from "../assets/loadingAnimation.json";
+import { Box, Button, Typography, Divider } from "@mui/material";
 
 const SingleArticle = () => {
   const { article_id } = useParams();
@@ -25,8 +28,8 @@ const SingleArticle = () => {
         setLoading(false);
       })
       .catch((err) => {
-        console.log(err);
         setError(err);
+        setLoading(false)
       });
   }, [article_id]);
 
@@ -37,7 +40,7 @@ const SingleArticle = () => {
         setArticle(article);
       })
       .catch((err) => {
-        console.log(err);
+        setError(err)
       })
       .finally(() => {
         setLoading(false);
@@ -58,66 +61,102 @@ const SingleArticle = () => {
   };
 
   if (loading) {
-    return <p>Loading ...</p>;
+    return (
+      <>
+        {" "}
+        <h2>Loading Article Content...</h2>
+        <div className="lottie-container">
+          <Lottie animationData={loadingAnimation} />
+        </div>
+      </>
+    );
   }
 
   if (error) {
-    console.log(error);
     return (
       <>
         {error.code} {error.message}
         <p>
-          An article with this id doesn't exist... yet! Why don't you write one?
+          An article with this id doesn't exist... yet!
         </p>
       </>
     );
   }
 
   return (
-    <>
-      <div className="article-single">
-        <h2 className="article-title">Article: {article.title}</h2>
-        <p>
-          <strong>Written at:</strong>{" "}
-          {new Date(article.created_at).toLocaleString()}
-        </p>
-        <strong>
-          <p className="article-author">Written by: {article.author}</p>
-          <p className="article-topic">Topic: {article.topic}</p>
-        </strong>
+    <Box sx={{ display: "flex", alignItems: "flex-start", maxWidth: "800px", margin: "auto", mt: 4, boxShadow: 3, borderRadius: 2 }}>
+      {/* Left-hand voting section */}
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          p: 2,
+          backgroundColor: "#f9f9f9",
+          borderRight: "1px solid #e0e0e0",
+        }}
+      >
+        <Button
+          size="small"
+          variant="contained"
+          color="success"
+          onClick={() => voteUpdater(1)}
+          disabled={hasVoted}
+          sx={{ minWidth: "40px", mb: 1 }}
+        >
+          ⬆️
+        </Button>
+        <Typography variant="body1" sx={{ fontWeight: "bold" }}>
+          {article.votes + voteChange}
+        </Typography>
+        <Button
+          size="small"
+          variant="contained"
+          color="error"
+          onClick={() => voteUpdater(-1)}
+          disabled={hasVoted}
+          sx={{ minWidth: "40px", mt: 1 }}
+        >
+          ⬇️
+        </Button>
+      </Box>
+
+      {/* Main content section */}
+      <Box sx={{ flexGrow: 1, p: 3 }}>
+        <Typography variant="h4" gutterBottom>
+          {article.title}
+        </Typography>
+        <Typography variant="body2" color="text.secondary" gutterBottom>
+          By {article.author} on {new Date(article.created_at).toLocaleDateString()} at {new Date(article.created_at).toLocaleTimeString()}
+        </Typography>
+        <Divider sx={{ my: 2 }} />
         <img
-          className="article-image"
           src={article.article_img_url}
           alt={article.title}
+          style={{ width: "100%", borderRadius: "8px", marginBottom: "16px" }}
         />
-        <p className="article-body">{article.body}</p>
-        <p className="article-votes">
-          Vote Count: {article.votes + voteChange}
-        </p>
-        <button onClick={() => voteUpdater(1)} disabled={hasVoted}>
-          ⬆️ Upvote
-        </button>
-        <button onClick={() => voteUpdater(-1)} disabled={hasVoted}>
-          ⬇️ Downvote
-        </button>
-        <p className="article-comment-count">
-          {" "}
-          Comment Count: {article.comment_count}
-        </p>
+        <Typography variant="body1" sx={{ mb: 2 }}>
+          {article.body}
+        </Typography>
+        <Divider sx={{ my: 2 }} />
         <CommentPost setComments={setComments} />
-        <div className="comment-grid">
+        <Typography variant="h6" sx={{ mt: 4 }}>
+          Comments ({article.comment_count})
+        </Typography>
+        <Box sx={{ mt: 2 }}>
           {comments.length > 0 ? (
             comments.map((comment) => (
-              <div key={comment.comment_id}>
-                <CommentCard comments={comment} setComments={setComments} />
-              </div>
+              <CommentCard key={comment.comment_id} comments={comment} setComments={setComments} />
             ))
           ) : (
-            <p>No comments yet. Be the first to add one!</p>
+            <Typography variant="body2" color="text.secondary">
+              No comments yet. Be the first to add one!
+            </Typography>
           )}
-        </div>
-      </div>
-    </>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 

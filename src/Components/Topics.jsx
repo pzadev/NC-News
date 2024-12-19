@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import { getTopics } from "../api";
 import TopicCard from "./TopicCard"
 
+
 const Topics = () => {
   const [loading, setLoading] = useState(false);
   const [topics, setTopics] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     setLoading(true);
@@ -14,13 +16,24 @@ const Topics = () => {
         setLoading(false);
       })
       .catch((err) => {
+        setError(err)
         setLoading(false)
-        console.log(err);
       });
   }, []);
 
   if (loading){
     return <p>Loading Topics...</p>
+  }
+
+  if (error) {
+    return (
+      <>
+        {error.code} {error.message}
+        <p>
+          Can't load Topics right now
+        </p>
+      </>
+    );
   }
 
   return  (

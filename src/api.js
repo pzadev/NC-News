@@ -50,7 +50,6 @@ const updateArticleVotes = (article_id, voteChange) => {
   return api
     .patch(`/articles/${article_id}`, { inc_votes: voteChange })
     .then(({ data }) => {
-      console.log(data);
       const { article } = data;
       return article;
     });

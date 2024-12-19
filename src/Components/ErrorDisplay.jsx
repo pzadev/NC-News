@@ -1,5 +1,5 @@
 const ErrorDisplay = () => {
-  return <div>Uh oh. This page doesn't exist!</div>;
+  return <h2>Uh oh. This page doesn't exist!</h2>;
 };
 
 export default ErrorDisplay;
