@@ -58,7 +58,7 @@ const CommentCard = ({ comments, setComments }) => {
   };
 
   if (loading) {
-    return <p>Loading comments...</p>;
+    return <h2>Loading comments...</h2>;
   }
 
   return (
@@ -88,7 +88,7 @@ const CommentCard = ({ comments, setComments }) => {
           />
         )}
         <p>
-          <strong>{comments.author}</strong>  commented
+          <strong>{comments.author}</strong> commented
         </p>
       </header>
       <section>
@@ -98,11 +98,11 @@ const CommentCard = ({ comments, setComments }) => {
           {new Date(comments.created_at).toLocaleString()}
         </p>
       </section>
-      {loggedInUser === comments.author && (
-        <footer>
+      <footer>
+        {loggedInUser?.username === comments.author ? (
           <button onClick={handleDelete}>Delete Comment</button>
-        </footer>
-      )}
+        ) : null}
+      </footer>
       {feedback && <p>{feedback}</p>}
     </article>
   );
