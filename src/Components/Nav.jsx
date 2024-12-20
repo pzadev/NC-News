@@ -13,10 +13,30 @@ const Nav = () => {
         <p>Topics</p>
       </Link>
       <Link to="/user">
-        <p>{loggedInUser ? <p>Currently logged in as <strong>{loggedInUser}</strong></p> : "Users"}</p>
+        <p>
+          {loggedInUser ? (
+            <span>
+              Currently logged in as <strong>{loggedInUser.username}</strong>
+            </span>
+          ) : (
+            "Users"
+          )}
+        </p>
       </Link>
       {loggedInUser ? (
-        ''
+        <div className="user-info">
+          <img
+            src={loggedInUser.avatar_url}
+            alt={`${loggedInUser.username}'s avatar`}
+            className="avatar"
+            style={{
+              width: "40px",
+              height: "40px",
+              borderRadius: "10%",
+              marginLeft: "0px",
+            }}
+          />
+        </div>
       ) : (
         <p>Not currently logged in</p>
       )}

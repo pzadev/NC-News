@@ -22,7 +22,7 @@ const Topics = () => {
   }, []);
 
   if (loading){
-    return <p>Loading Topics...</p>
+    return <h2>Loading Topics...</h2>
   }
 
   if (error) {

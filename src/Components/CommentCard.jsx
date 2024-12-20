@@ -1,11 +1,35 @@
 import { deleteComment } from "../api";
 import { useUser } from "../Components/UserContext";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { getUsers } from "../api";
 
 const CommentCard = ({ comments, setComments }) => {
   const { loggedInUser } = useUser();
   const [feedback, setFeedback] = useState("");
   const [loading, setIsLoading] = useState(false);
+  const [users, setUsers] = useState([]);
+  const [commentAuthorAvatar, setCommentAuthorAvatar] = useState(null);
+
+  useEffect(() => {
+    setIsLoading(true);
+    getUsers()
+      .then((users) => {
+        setUsers(users);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (users && comments) {
+      const user = users.find((user) => user.username === comments.author);
+      if (user) {
+        setCommentAuthorAvatar(user.avatar_url);
+      }
+    }
+  }, [comments, users]);
 
   const handleDelete = () => {
     setIsLoading(true);
@@ -39,12 +63,32 @@ const CommentCard = ({ comments, setComments }) => {
 
   return (
     <article className="comment-card">
-      <header>
+      <header style={{ display: "flex", alignItems: "center" }}>
+        {commentAuthorAvatar ? (
+          <img
+            src={commentAuthorAvatar}
+            alt={`${comments.author}'s avatar`}
+            style={{
+              width: "40px",
+              height: "40px",
+              borderRadius: "50%",
+              marginRight: "10px",
+            }}
+          />
+        ) : (
+          <img
+            src="/default-avatar.png"
+            alt="Default Avatar"
+            style={{
+              width: "40px",
+              height: "40px",
+              borderRadius: "50%",
+              marginRight: "10px",
+            }}
+          />
+        )}
         <p>
-          <strong>Author:</strong> {comments.author}
-        </p>
-        <p>
-          <strong>Votes:</strong> {comments.votes}
+          <strong>{comments.author}</strong>  commented
         </p>
       </header>
       <section>

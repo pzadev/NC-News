@@ -7,17 +7,17 @@ const CommentPost = ({ setComments }) => {
   const { article_id } = useParams();
   const { loggedInUser } = useUser();
   const [commentRes, setCommentRes] = useState("");
-  const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
     username: "",
     commentBody: "",
   });
 
+  
   useEffect(() => {
     if (loggedInUser) {
       setFormData((prevData) => ({
         ...prevData,
-        username: loggedInUser,
+        username: loggedInUser.username,
       }));
     }
   }, [loggedInUser]);
@@ -39,13 +39,13 @@ const CommentPost = ({ setComments }) => {
         setCommentRes("Your comment has been posted successfully!");
       })
       .catch((err) => {
-        setError(err);
         setFormData({ username: "", commentBody: "" });
         setCommentRes(
           "There was an issue posting your comment. Please log in or use a username already registered."
         );
       });
   };
+
 
   return (
     <div>

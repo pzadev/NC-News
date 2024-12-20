@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getArticles, getSingleArticle } from "../api";
+import { getArticles} from "../api";
 import ArticleCard from "./ArticleCard";
 import useQueryParams from "../QueryParams";
 import Lottie from "lottie-react";

@@ -163,7 +163,7 @@ const ArticleCard = ({ article }) => {
                 fontStyle: "italic",
               }}
             >
-              Authored by <strong>{article.author}</strong> on {''}  
+              Published by <strong>{article.author}</strong> on {''}  
               <strong>{new Date(article.created_at).toLocaleDateString()}</strong> at {" "} 
               <strong>{new Date(article.created_at).toLocaleTimeString()}</strong>
             </Typography>

@@ -85,7 +85,6 @@ const SingleArticle = () => {
 
   return (
     <Box sx={{ display: "flex", alignItems: "flex-start", maxWidth: "800px", margin: "auto", mt: 4, boxShadow: 3, borderRadius: 2 }}>
-      {/* Left-hand voting section */}
       <Box
         sx={{
           display: "flex",
@@ -108,7 +107,7 @@ const SingleArticle = () => {
           ⬆️
         </Button>
         <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-          {article.votes + voteChange}
+          {Number(article.votes) + voteChange || 0}
         </Typography>
         <Button
           size="small"
@@ -122,7 +121,6 @@ const SingleArticle = () => {
         </Button>
       </Box>
 
-      {/* Main content section */}
       <Box sx={{ flexGrow: 1, p: 3 }}>
         <Typography variant="h4" gutterBottom>
           {article.title}
