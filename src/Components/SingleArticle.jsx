@@ -66,7 +66,8 @@ const SingleArticle = () => {
         {" "}
         <h2>Loading Article Content...</h2>
         <div className="lottie-container">
-          <Lottie animationData={loadingAnimation} />
+          <Lottie animationData={loadingAnimation}
+          style={{ width: "500px", height: "400px" }} />
         </div>
       </>
     );

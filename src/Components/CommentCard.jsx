@@ -58,7 +58,7 @@ const CommentCard = ({ comments, setComments }) => {
   };
 
   if (loading) {
-    return <p>Processing request...</p>;
+    return <p>Loading comments...</p>;
   }
 
   return (

@@ -33,12 +33,11 @@ const Nav = () => {
               width: "40px",
               height: "40px",
               borderRadius: "10%",
-              marginLeft: "0px",
             }}
           />
         </div>
       ) : (
-        <p>Not currently logged in</p>
+        <div>Not currently logged in</div>
       )}
     </nav>
   );
