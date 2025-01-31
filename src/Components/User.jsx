@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { getUsers } from "../api";
 import { useUser } from "./UserContext";
-import "../User.css";
 
 const User = () => {
   const [users, setUsers] = useState([]);
@@ -46,7 +45,7 @@ const User = () => {
           <img
             src={loggedInUser.avatar_url}
             alt={`${loggedInUser.username}'s avatar`}
-            style={{ width: "300px", height: "300px" }}
+            style={{ width: "100px", height: "100px" }}
           />
           <button onClick={handleLogout}>Log Out</button>
         </div>
